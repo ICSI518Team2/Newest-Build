@@ -137,7 +137,7 @@ function submitform()
 
                                             <div class="col-sm-4">
                                               <div class="panel panel-primary">
-                              <div class="panel-heading">${item.product_name}</div>
+                              <div class="panel-heading">${item.item_name}</div>
                               <div class="panel-body"><img src= "${item.image_path}" class="img-responsive" style="width:100%; height:40%;" alt="Image"></div>
                               <div class="panel-footer" style= "cursor:pointer">
                                  <a data-toggle="modal" data-target="#${item.id}">${item.description}</a></div>
@@ -154,7 +154,7 @@ function submitform()
                             <div class="modal-content">
                               <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">${item.product_name}</h4>
+                                <h4 class="modal-title">${item.item_name}</h4>
                               </div>
                               <div class="modal-body">
                                      <img src= "${item.image_path}"
@@ -191,7 +191,7 @@ function submitform()
 
                                                 <div class="col-sm-4">
                                                   <div class="panel panel-primary">
-                                  <div class="panel-heading">${item.product_name}</div>
+                                  <div class="panel-heading">${item.item_name}</div>
                                   <div class="panel-body"><img src= "${item.image_path}" class="img-responsive" style="width:100%; height:40%;" alt="Image"></div>
                                   <div class="panel-footer" style= "cursor:pointer">
                                      <a data-toggle="modal" data-target="#${item.id}">${item.description}</a></div>
@@ -207,7 +207,7 @@ function submitform()
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">${item.product_name}</h4>
+                                    <h4 class="modal-title">${item.item_name}</h4>
                                   </div>
                                   <div class="modal-body">
                                          <img src= "${item.image_path}"

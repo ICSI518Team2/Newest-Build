@@ -33,8 +33,8 @@ public class LoginController {
 
 		itemList = itemservice.showAllitems();
 		for(Item item: itemList){
-			System.out.println(item.product_name + " "+ key);
-			if (item.product_name.equals(key) ){
+			System.out.println(item.item_name + " "+ key);
+			if (item.item_name.equals(key) ){
 				resultSet.add(item);
 			}
 			else if (item.description.indexOf(key)!=-1){

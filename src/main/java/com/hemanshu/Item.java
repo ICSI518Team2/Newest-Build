@@ -10,10 +10,10 @@ public class Item {
  
 	@Id
 	public int id;
-	private int seller_id;
+	private String seller_id;
 	private String category;
 	private String cost_price;
-	public String product_name;
+	public String item_name;
 	private int quantity;
 	private String selling_price;
 	private boolean status;
@@ -28,11 +28,11 @@ public class Item {
 		this.id = id;
 	}
 
-	public int getSeller_id() {
+	public String getSeller_id() {
 		return seller_id;
 	}
 
-	public void setSeller_id(int seller_id) {
+	public void setSeller_id(String seller_id) {
 		this.seller_id = seller_id;
 	}
 
@@ -52,12 +52,12 @@ public class Item {
 		this.cost_price = cost_price;
 	}
 
-	public String getProduct_name() {
-		return product_name;
+	public String getitem_name() {
+		return item_name;
 	}
 
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setitem_name(String item_name) {
+		this.item_name = item_name;
 	}
 
 	public int getQuantity() {

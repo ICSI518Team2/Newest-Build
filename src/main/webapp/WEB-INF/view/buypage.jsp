@@ -75,7 +75,7 @@
       <br/><br/>
 
 
-              <h3> You have chosen to purchase ${item.product_name} from Sreekar</h3>
+              <h3> You have chosen to purchase ${item.item_name} from ${item.seller_id}</h3>
               <h3> Call him at 5185265769 to finalize the deal. Asking price is ${item.selling_price} </h3>
 
 

@@ -1,5 +1,4 @@
 com\hemanshu\User.class
-com\hemanshu\LoginController.class
 com\hemanshu\ItemRepository.class
 com\hemanshu\UserService.class
 com\hemanshu\ItemService.class
