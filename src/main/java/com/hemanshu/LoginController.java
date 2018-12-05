@@ -3,8 +3,12 @@ package com.hemanshu;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
+
 import com.hemanshu.ItemService;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -18,7 +22,7 @@ import java.util.Optional;
 public class LoginController {
 	@Autowired
 	UserRepo ur;
-	
+	String chatuser="";
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -36,7 +40,7 @@ public class LoginController {
 
 	@Autowired
 	RegisterNumberRepository registerNumberRepository;
-
+	
 	public List<Item> getProducts(String key){
 		List<Item> itemList = new ArrayList<Item>();
 		List<Item> resultSet = new ArrayList<Item>();
@@ -54,7 +58,19 @@ public class LoginController {
 		}
 		return resultSet;
 	}
-
+    @RequestMapping("/message")
+    public String message(){
+    	return "Message";
+    	
+    }
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public Greeting greeting(HelloMessage message) throws Exception {
+        Thread.sleep(1000); // simulated delay
+       System.out.println("cchatt"+message.getUsername());
+       
+        return new Greeting( HtmlUtils.htmlEscape(message.getUsername()+": "+message.getName()) );
+    }
 	@RequestMapping("/admin")
 	public String Welcome(HttpServletRequest request) {
 		request.setAttribute("mode", "MODE_HOME");
@@ -108,6 +124,7 @@ public class LoginController {
 		if(ur.findByEmailIDAndPassword(user.getEmailID(),user.getPassword())!=null)
 		{
 			session.setAttribute("username", user.getEmailID());
+			chatuser=user.getEmailID();
 //			System.out.print("Role in class:"+user.getRole());
 			User d=ur.findByEmailIDAndPassword(user.getEmailID(),user.getPassword() );
 

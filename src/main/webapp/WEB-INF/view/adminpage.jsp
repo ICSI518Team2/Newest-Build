@@ -23,7 +23,7 @@ String user = null;
 response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
 System.out.print("role: "+session.getAttribute("role") );
 if(!session.getAttribute("role").equals("admin")){
-	
+
 	response.sendRedirect("welcome");
 }
 
@@ -40,6 +40,7 @@ if(!session.getAttribute("role").equals("admin")){
 					<li><a href="/email">Email</a></li>
 					<li><a href="/admin/statistics">Statistics</a></li>
 					<li><a href="http://ec2-3-16-45-195.us-east-2.compute.amazonaws.com:9001/">Chat room</a></li>
+					<li><a href="/message">Chat room ashita </a></li>
 					<li><a href="javascript: submitform()">Logout</a></li>
 					
 					

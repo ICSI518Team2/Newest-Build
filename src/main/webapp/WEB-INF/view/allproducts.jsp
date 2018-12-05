@@ -87,6 +87,7 @@ if(session.getAttribute("role").equals("admin")){
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="/contact">Contact</a></li>
+              <li><a href="/message">Chat room </a></li>
             </ul>
             <form name="myForm"method="post" action="/logout">
             <ul class="nav navbar-nav navbar-right">
