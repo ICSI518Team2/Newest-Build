@@ -24,14 +24,14 @@ public class EmailService {
 //		        System.out.println("after");
 		        for (User user1 : users) {
 		        	
-		        
+		        try {
 		
 		        // Enable the multipart flag!
 		
 		        MimeMessageHelper helper = new MimeMessageHelper(message,true);
 		
 		         
-//		        System.out.println(user1.getEmailID());
+		        System.out.println(user1.getEmailID());
 		       helper.setFrom("team2@sellitdown.com");
 		        helper.setTo(user1.getEmailID());
 		
@@ -42,6 +42,12 @@ public class EmailService {
 		
 		        sender.send(message);
 		        }
+		        catch(Exception e){
+		        	System.out.println("email not send to "+user1.getEmailID());
+		        	}
+		        }
+		            
+		        
 		    }
 
 	public void emailFriend(String friend,String text,String subject, String from) throws Exception{
