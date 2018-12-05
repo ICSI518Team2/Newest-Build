@@ -7,7 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.hemanshu.ItemService;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +31,11 @@ public class LoginController {
 	@Autowired
 	ItemRepository itemrepository;
 
+	@Autowired
+	LoginNumberRepository loginNumberRepository;
 
+	@Autowired
+	RegisterNumberRepository registerNumberRepository;
 
 	public List<Item> getProducts(String key){
 		List<Item> itemList = new ArrayList<Item>();
@@ -71,6 +77,11 @@ public class LoginController {
 	@RequestMapping("/signup")
 	public String signup()
 	{
+		RegisterNumbers r = new RegisterNumbers();
+		r.setDate(getDateInString());
+		r.setUser_id("signupID");
+		registerNumberRepository.save(r);
+
 		return "Signup";
 	}
 
@@ -99,6 +110,11 @@ public class LoginController {
 			session.setAttribute("username", user.getEmailID());
 //			System.out.print("Role in class:"+user.getRole());
 			User d=ur.findByEmailIDAndPassword(user.getEmailID(),user.getPassword() );
+
+			loginNumbers n = new loginNumbers();
+			n.setDate(getDateInString());
+			n.setUser_id(d.getEmailID());
+			loginNumberRepository.save(n);
 			
 			if(d.getRole().equalsIgnoreCase("admin"))
 			{
@@ -292,5 +308,11 @@ public class LoginController {
 
 		return "review";
 
+	}
+
+	public String getDateInString(){
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		return formatter.format(date);
 	}
 }
