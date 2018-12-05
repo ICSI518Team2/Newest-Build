@@ -44,4 +44,32 @@ public class EmailService {
 		        }
 		    }
 
+	public void emailFriend(String friend,String text,String subject, String from) throws Exception{
+//		System.out.println("before");
+		MimeMessage message = sender.createMimeMessage();
+//		        System.out.println("after");
+		String[] users = friend.split(",");
+		for (int i=0; i<users.length; i++){
+
+
+
+			// Enable the multipart flag!
+
+			MimeMessageHelper helper = new MimeMessageHelper(message,true);
+
+
+//		        System.out.println(user1.getEmailID());
+			helper.setFrom("\"team2@sellitdown.com\"");
+			System.out.println("Sending message from " + from);
+			System.out.println("Sending message to " + users[i]);
+			helper.setText(text);
+
+			helper.setSubject(subject);
+
+
+			sender.send(message);
+			System.out.println("\n\n\n***************\n Sent Message to "+friend+"\n\n********************\n\n");
+		}
+	}
+
 }

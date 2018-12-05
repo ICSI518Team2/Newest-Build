@@ -9,6 +9,8 @@ import com.hemanshu.ItemService;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Controller
 public class LoginController {
@@ -21,6 +23,8 @@ public class LoginController {
 	EmailService emailService;
 	@Autowired
 	ItemService itemservice;
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	@Autowired
 	ItemRepository itemrepository;
@@ -104,6 +108,7 @@ public class LoginController {
 			}
 			else {
 				session.setAttribute("role", "user");
+				session.setAttribute("user", user);
 				request.setAttribute("item", itemservice.showAllitems());
 				request.setAttribute("mode", "All_Products");
 				return "allproducts";}
@@ -197,6 +202,8 @@ public class LoginController {
 		request.setAttribute("mode", "EMAIL");
 		return "adminpage";
 	}
+
+
 	@RequestMapping(value="/sendemail", method=RequestMethod.POST)
 	public String sendemail(@RequestParam("text") String text,@RequestParam("subject") String subject,HttpServletRequest request) {
 		try {
@@ -208,5 +215,82 @@ public class LoginController {
 		}
 		request.setAttribute("mode", "SENDEMAIL");
 		return "adminpage";
+	}
+
+	@RequestMapping(value="/emailFriend", method=RequestMethod.POST)
+	public String emailFriend(@ModelAttribute("user") User user, @RequestParam String friend, @RequestParam String itemDetails,HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Object email = session.getAttribute("username");
+			System.out.println("This variable has value " + (String) email  + "\n **************");
+			emailService.emailFriend(friend, itemDetails,"Check out this product at Sell It Down", (String) email);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "buypage";
+	}
+
+	@GetMapping("/seeReviews")
+	public String seeReviews(@RequestParam int id, HttpServletRequest request){
+		HttpSession session = request.getSession();
+//		Object user = session.getAttribute("user");
+//		User thisUser = (User) user;
+//		int userID = thisUser.getID();
+//		try {
+//			Optional<Review> review = reviewRepository.findById(id);
+//			Review userReview = review.get();
+//			String allReviews = userReview.getReviews();
+//			allReviews += "This is added manually";
+//			String[] s = allReviews.split(",");
+//			userReview.setReviews(allReviews);
+//			request.setAttribute("allReviews", allReviews);
+//			return "review";
+//		}
+//		catch(Exception e){
+			Review newReview = new Review();
+			newReview.setID(id);
+			String allReviews = newReview.getReviews();
+			allReviews += "This is added manually";
+			String[] s = allReviews.split(",");
+			newReview.setReviews(allReviews);
+			newReview.setReviews(allReviews);
+			System.out.println(newReview.getReviews());
+			for(String review : s){
+				System.out.println("*****"+review);
+
+			}
+			request.setAttribute("allReviews", s);
+			try {
+				return "review";
+			}
+			catch(Exception e){
+				System.out.println(e);
+			}
+//		}
+		return "nothing";
+
+
+	}
+
+	@PostMapping("/submitReview")
+	public String submitReview(@RequestParam String review, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		session.getAttribute("user");
+		List<User> listOfUsers = userService.showAllUsers();
+		for(User oneUser : listOfUsers){
+			if( oneUser.getID() == 101){
+				Optional<Review> reviews = reviewRepository.findById(101);
+				Review reviewToAdd = reviews.get();
+				String allReviews = reviewToAdd.getReviews();
+				reviewToAdd.setReviews(allReviews);
+				request.setAttribute("reviews", allReviews);
+				return "review";
+			}
+		}
+
+		return "review";
+
 	}
 }

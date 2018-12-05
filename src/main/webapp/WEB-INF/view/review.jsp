@@ -75,21 +75,8 @@
       <br/><br/>
 
 
-              <h3> You have chosen to purchase ${item.item_name} from ${item.seller_id}</h3>
-              <h3> Call him at 5185265769 to finalize the deal. Asking price is ${item.selling_price} </h3>
-      
-
-
-      <h3> Want to share details to your friends?</h3>
-      <form action = "emailFriend" method = "post" id = "emailForm">
-        Enter their emails <input type = "text" id = "friend" name = "friend">
-        <input type = "hidden" id = "itemDetails" name = "itemDetails" value = "I am thinking of purchasing ${item.item_name} for ${item.selling_price}. Check out more details at http://localhost:8080/buy-item?id=${item.id}">
-        <input type = "submit" value = "submit">
-      </form>
-
-
-
-
-
+              <c:forEach var="review" items="${allReviews}">
+                    ${review}<br>
+              </c:forEach>
 </body>
 </html>
