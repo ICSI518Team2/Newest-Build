@@ -162,6 +162,7 @@ function submitform()
 
                                 <p>${item.seller_id}</p>
                                  <button type="button" class="btn btn-info" onclick ="window.location.href='/buy-item?id=${item.id}'">Buy</button>
+                                 <button type="button" class="btn btn-info" onclick ="window.location.href='/seeReviews?id=${item.seller_id}'">Seller Reviews</button>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -74,9 +74,17 @@
       </nav>
       <br/><br/>
 
+      <h1> All Reviews </h1> <br>
+
 
               <c:forEach var="review" items="${allReviews}">
                     ${review}<br>
               </c:forEach>
+
+
+            <form action = "submitReview" method = "post" id = "emailForm">
+              Right your own review <input type = "text" id = "review" name = "review">
+              <input type = "submit" value = "submit">
+            </form>
 </body>
 </html>

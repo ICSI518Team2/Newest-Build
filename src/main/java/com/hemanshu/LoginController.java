@@ -233,60 +233,86 @@ public class LoginController {
 	}
 
 	@GetMapping("/seeReviews")
-	public String seeReviews(@RequestParam int id, HttpServletRequest request){
+	public String seeReviews(@RequestParam String id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-//		Object user = session.getAttribute("user");
-//		User thisUser = (User) user;
-//		int userID = thisUser.getID();
-//		try {
-//			Optional<Review> review = reviewRepository.findById(id);
-//			Review userReview = review.get();
-//			String allReviews = userReview.getReviews();
-//			allReviews += "This is added manually";
-//			String[] s = allReviews.split(",");
-//			userReview.setReviews(allReviews);
-//			request.setAttribute("allReviews", allReviews);
-//			return "review";
-//		}
-//		catch(Exception e){
+		List<User> listOfUsers = userService.showAllUsers();
+		int ID = 0;
+		for(User oneUser : listOfUsers){
+			if(oneUser.getName().equals(id)){
+				ID = oneUser.getID();
+				System.out.println("It entered here**********************");
+				session.setAttribute("theSellerID", ID);
+				break;
+			}
+		}
+
+
+		try {
+			Optional<Review> review = reviewRepository.findById(ID);
+			Review userReview = review.get();
+			String allReviews = userReview.getReviews();
+			String[] s = allReviews.split(",");
+			request.setAttribute("allReviews", allReviews);
+			return "review";
+		} catch (Exception e) {
 			Review newReview = new Review();
-			newReview.setID(id);
-			String allReviews = newReview.getReviews();
-			allReviews += "This is added manually";
+			newReview.setID(ID);
+			String allReviews = "";
 			String[] s = allReviews.split(",");
 			newReview.setReviews(allReviews);
-			newReview.setReviews(allReviews);
 			System.out.println(newReview.getReviews());
-			for(String review : s){
-				System.out.println("*****"+review);
+			for (String review : s) {
+				System.out.println("*****" + review);
 
 			}
 			request.setAttribute("allReviews", s);
 			try {
 				return "review";
+			} catch (Exception p) {
+				System.out.println(p);
 			}
-			catch(Exception e){
-				System.out.println(e);
-			}
-//		}
-		return "nothing";
+			return "nothing";
 
 
+		}
 	}
 
+
 	@PostMapping("/submitReview")
-	public String submitReview(@RequestParam String review, HttpServletRequest request){
+	public String submitReview(@RequestParam String review,  HttpServletRequest request){
 		HttpSession session = request.getSession();
-		session.getAttribute("user");
+		Object identity = session.getAttribute("theSellerID");
+		int id = (int) identity;
+		String allReviews=",";
+		System.out.println("The Seller id "+id+"********************\n*******************");
 		List<User> listOfUsers = userService.showAllUsers();
 		for(User oneUser : listOfUsers){
-			if( oneUser.getID() == 101){
-				Optional<Review> reviews = reviewRepository.findById(101);
-				Review reviewToAdd = reviews.get();
-				String allReviews = reviewToAdd.getReviews();
-				reviewToAdd.setReviews(allReviews);
-				request.setAttribute("reviews", allReviews);
-				return "review";
+			if( oneUser.getID() == id){
+				Optional<Review> reviews = reviewRepository.findById(id);
+				
+				try {
+					reviews.get();
+				}
+				catch(Exception e) {
+					Review newReview = new Review();
+					allReviews = review;
+					newReview.setID(id);
+					newReview.setReviews(allReviews);
+					request.setAttribute("allReviews", allReviews);
+					reviewRepository.save(newReview);
+					return "review";
+				}
+				
+					Review reviewToAdd = reviews.get();
+					allReviews = reviewToAdd.getReviews();
+					System.out.println("Before adding" + allReviews);
+					allReviews = allReviews + ", " + review;
+					System.out.println("After adding" + allReviews);
+					reviewToAdd.setReviews(allReviews);
+					String[] s = allReviews.split(",");
+					request.setAttribute("allReviews", s);
+					reviewRepository.save(reviewToAdd);
+					return "review";
 			}
 		}
 

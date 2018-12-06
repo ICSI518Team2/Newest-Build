@@ -24,7 +24,7 @@ public class Review {
         ID = iD;
     }
     public String getReviews(){return reviews;};
-    public void setReviews(String newReview){this.reviews = this.reviews + ", " + newReview;};
+    public void setReviews(String newReview){this.reviews = newReview;};
 
 
 

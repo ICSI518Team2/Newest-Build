@@ -59,8 +59,9 @@ public class EmailService {
 
 
 //		        System.out.println(user1.getEmailID());
-			helper.setFrom("\"team2@sellitdown.com\"");
+			helper.setFrom("team2@sellitdown.com");
 			System.out.println("Sending message from " + from);
+			helper.setTo(users[i]);
 			System.out.println("Sending message to " + users[i]);
 			helper.setText(text);
 
